@@ -1,6 +1,6 @@
 ---
 title: defer & async
-date: 2025-04-10 18:13:49
+date: 2025-04-10 18:18:20
 tags: javascript, js, node, npm, vue, react, webpack, ts, java, go, html, css, api
 categories: js, java, frontend, backend
 ---
@@ -9,13 +9,13 @@ categories: js, java, frontend, backend
 
 # JavaScript Defer vs Async Explained (2025-04-09 17:24:22)
 
-_**User**_
+_**Question**_
 
 使用 defer 或者 async 异步下载，是新开了一个线程吗
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 不是的,defer 和 async 并不会开启新的线程。JavaScript 是单线程的语言,这两个属性只是改变了脚本的加载和执行时序。让我来详细解释一下:
 
@@ -63,13 +63,13 @@ HTML 解析 ------------|
 
 ---
 
-_**User**_
+_**Question**_
 
 浏览器本身可以并发请求，如果在一个页面底部加载 script 时，加不加 defer 有区别吗
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 如果脚本标签放在页面底部(</body>之前)，加不加 defer 实际上区别很小，因为此时 HTML 已经基本解析完成。不过还是存在一些细微差别：
 
@@ -110,13 +110,13 @@ _**Assistant**_
 
 ---
 
-_**User**_
+_**Question**_
 
 既然不加defer 的时候，脚本按顺序下载执行，那么浏览器的并发请求还有什么用呢
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 浏览器的并发请求主要用于其他资源的并行下载，而不仅仅是脚本文件。让我解释一下：
 
@@ -180,13 +180,13 @@ _**Assistant**_
 
 ---
 
-_**User**_
+_**Question**_
 
 确认下js文件下载和执行都是串行的吗
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 我需要纠正之前的说法。对于普通的 script 标签（不带 defer/async）：
 
@@ -222,13 +222,13 @@ _**Assistant**_
 
 ---
 
-_**User**_
+_**Question**_
 
 如果是并行下载，串行执行的，那加不加 defer 还有什么区别
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 主要区别在于 defer 改变了脚本的执行时机和 HTML 解析的阻塞行为：
 
@@ -286,13 +286,13 @@ DOMContentLoaded 事件 ------------>
 
 ---
 
-_**User**_
+_**Question**_
 
 多个加了 defer 的 script 执行顺序是什么样
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 多个带 defer 的脚本特点是：
 - 并行下载
@@ -347,13 +347,13 @@ DOMContentLoaded 事件 ----------------->
 
 ---
 
-_**User**_
+_**Question**_
 
 css 可以添加 prefetch 吗
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 是的，CSS 文件可以使用 prefetch，而且还有其他几种预加载的方式。我来详细解释一下：
 
@@ -424,13 +424,13 @@ _**Assistant**_
 
 ---
 
-_**User**_
+_**Question**_
 
 webpack 中配置 externals 的，还会被打包吗
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 不会，配置为 externals 的模块会被排除在打包文件之外。这些模块被认为是外部依赖，webpack 不会对其进行打包处理。
 
@@ -522,13 +522,13 @@ module.exports = {
 
 ---
 
-_**User**_
+_**Question**_
 
 网络浏览器面板中的优化级：high，highest, low, lowest ,如何在前端控制这些资源的优先级呢
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 前端可以通过多种方式控制资源的加载优先级：
 
@@ -652,13 +652,13 @@ document.head.appendChild(hint);
 
 ---
 
-_**User**_
+_**Question**_
 
 rel=preload 添加到 css 资源上的作用
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 rel="preload" 添加到 CSS 资源上主要用于提前声明重要的 CSS 资源，让浏览器更早地发现并下载这些资源。主要作用和使用场景如下：
 
@@ -785,13 +785,13 @@ b. **优先级控制**：
 
 ---
 
-_**User**_
+_**Question**_
 
 会阻塞页面吗
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 rel="preload" 本身不会阻塞页面渲染，但需要区分几种情况：
 
@@ -895,13 +895,13 @@ loadCSS('style.css');
 
 ---
 
-_**User**_
+_**Question**_
 
 cacheGroups 中的 iconfont.js 设置为 lowest
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 在 webpack 配置中，我们可以通过 optimization.splitChunks.cacheGroups 来设置 iconfont.js 的加载优先级。这里有几种方法：
 
@@ -1040,13 +1040,13 @@ window.addEventListener('load', () => {
 
 ---
 
-_**User**_
+_**Question**_
 
 chunks: 'all' 的意思是什么
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 chunks: 'all' 表示对所有类型的 chunks 都进行分割处理，包括：
 
@@ -1130,13 +1130,13 @@ module.exports = {
 
 ---
 
-_**User**_
+_**Question**_
 
 vue 中页面开始加载是在 js 哪个事件之后进行的
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 在 Vue 中，页面加载涉及几个关键的生命周期事件，主要顺序如下：
 
@@ -1300,13 +1300,13 @@ export default {
 
 ---
 
-_**User**_
+_**Question**_
 
 是在页面加载完成之后，即 window.onload 结束之后吗
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 不是的，Vue 的生命周期和 window.onload 是独立的事件。Vue 的 mounted 钩子通常会在 window.onload 之前触发。让我解释一下它们的关系：
 
@@ -1466,13 +1466,13 @@ export default {
 
 ---
 
-_**User**_
+_**Question**_
 
 是在 DCL 之后 vue 开始渲染吗
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 是的，Vue 的渲染是在 DOMContentLoaded (DCL) 事件之后开始的。让我详细解释一下这个过程：
 
@@ -1627,13 +1627,13 @@ components: {
 
 ---
 
-_**User**_
+_**Question**_
 
 如果body底部有 script 加载，那么DCL 触发是在 script 加载之前还是之后
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 对于位于 body 底部的 script，分几种情况：
 
@@ -1726,13 +1726,13 @@ _**Assistant**_
 
 ---
 
-_**User**_
+_**Question**_
 
 @index.html 页面中的这种情况，DCL 是在script加载之前触发吗
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 让我分析一下这个 index.html 中的脚本加载情况：
 
@@ -1782,13 +1782,13 @@ _**Assistant**_
 
 ---
 
-_**User**_
+_**Question**_
 
 这个项目是一个 vue 项目，如果vue组件中存在使用 jquery 的情况，还能加 defer 吗
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 
 
@@ -1867,13 +1867,13 @@ export default {
 
 ---
 
-_**User**_
+_**Question**_
 
 可以将外部引用的 css 文件放到底部吗
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 
 
@@ -1951,13 +1951,13 @@ _**Assistant**_
 
 ---
 
-_**User**_
+_**Question**_
 
 使用 preload 进行异步加载，异步体现在哪个地方
 
 ---
 
-_**Assistant**_
+_**Answer**_
 
 
 
