@@ -81,13 +81,13 @@
 
 
 
-<meta name="description" content="拼音编辑器 需求背景 实现一个拼音编辑器，提高教研同事工作效率实现功能： 三种形式的内容编辑，组合格，四线三格，田字格 组合格中的拼音支持切换音调，遵循拼音的注音逻辑 多音字支持切换不同的拼音 支持新增，删除，换行格子 四线三格支持跟随内容的输入而宽度变化，自适应  支持导出为 svg 形式的 base64 支持修改编辑，编辑内容回显  代码结构 Dom 结构   最外层svg: 编辑器内容区的容">
+<meta name="description" content="title: 拼音编辑器的技术实现 date: 2025-04-11 14:12:34 tags: SVG, DOM, fontmin categories: frontend, svg, web 拼音编辑器 需求背景 实现一个拼音编辑器，提高教研同事工作效率实现功能： 三种形式的内容编辑，组合格，四线三格，田字格 组合格中的拼音支持切换音调，遵循拼音的注音逻辑 多音字支持切换不同的拼音 支持新">
 <meta name="keywords" content="SVG, DOM, fontmin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="拼音编辑器的技术实现">
 <meta property="og:url" content="https://newpromise.github.io/2025/04/11/拼音编辑器的技术实现/index.html">
 <meta property="og:site_name" content="上善若水">
-<meta property="og:description" content="拼音编辑器 需求背景 实现一个拼音编辑器，提高教研同事工作效率实现功能： 三种形式的内容编辑，组合格，四线三格，田字格 组合格中的拼音支持切换音调，遵循拼音的注音逻辑 多音字支持切换不同的拼音 支持新增，删除，换行格子 四线三格支持跟随内容的输入而宽度变化，自适应  支持导出为 svg 形式的 base64 支持修改编辑，编辑内容回显  代码结构 Dom 结构   最外层svg: 编辑器内容区的容">
+<meta property="og:description" content="title: 拼音编辑器的技术实现 date: 2025-04-11 14:12:34 tags: SVG, DOM, fontmin categories: frontend, svg, web 拼音编辑器 需求背景 实现一个拼音编辑器，提高教研同事工作效率实现功能： 三种形式的内容编辑，组合格，四线三格，田字格 组合格中的拼音支持切换音调，遵循拼音的注音逻辑 多音字支持切换不同的拼音 支持新">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器的技术实现/image-20230409141357370.png">
 <meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器的技术实现/image-20230409143554997.png">
@@ -99,10 +99,10 @@
 <meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器的技术实现/4.png">
 <meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器的技术实现/pase-1.png">
 <meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器的技术实现/pase-2.png">
-<meta property="og:updated_time" content="2025-04-11T06:13:49.971Z">
+<meta property="og:updated_time" content="2025-04-11T06:23:11.472Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="拼音编辑器的技术实现">
-<meta name="twitter:description" content="拼音编辑器 需求背景 实现一个拼音编辑器，提高教研同事工作效率实现功能： 三种形式的内容编辑，组合格，四线三格，田字格 组合格中的拼音支持切换音调，遵循拼音的注音逻辑 多音字支持切换不同的拼音 支持新增，删除，换行格子 四线三格支持跟随内容的输入而宽度变化，自适应  支持导出为 svg 形式的 base64 支持修改编辑，编辑内容回显  代码结构 Dom 结构   最外层svg: 编辑器内容区的容">
+<meta name="twitter:description" content="title: 拼音编辑器的技术实现 date: 2025-04-11 14:12:34 tags: SVG, DOM, fontmin categories: frontend, svg, web 拼音编辑器 需求背景 实现一个拼音编辑器，提高教研同事工作效率实现功能： 三种形式的内容编辑，组合格，四线三格，田字格 组合格中的拼音支持切换音调，遵循拼音的注音逻辑 多音字支持切换不同的拼音 支持新">
 <meta name="twitter:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器的技术实现/image-20230409141357370.png">
 
 
@@ -337,7 +337,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-11T14:12:34+00:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-11T14:23:00+00:00">
                 2025-04-11
               </time>
             
@@ -353,7 +353,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-04-11T06:13:49+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-04-11T06:23:11+00:00">
                 2025-04-11
               </time>
             
@@ -461,7 +461,12 @@
       
 
       
-        <h1 id="拼音编辑器">拼音编辑器</h1>
+        <hr>
+title: 拼音编辑器的技术实现
+date: 2025-04-11 14:12:34
+tags: SVG, DOM, fontmin
+categories: frontend, svg, web<hr>
+<h1 id="拼音编辑器">拼音编辑器</h1>
 <h2 id="需求背景">需求背景</h2>
 实现一个拼音编辑器，提高教研同事工作效率实现功能：<ol>
 <li>三种形式的内容编辑，组合格，四线三格，田字格</li>
@@ -520,7 +525,7 @@
 </ul>
 <h3 id="兼容性问题">兼容性问题</h3>
 svg 中混合 <code>foreignObject</code> 在 safari 浏览器上会有展示问题：
-如下：<img src="pase-1.png" loading="lazy">问题是作用在 <code>foreignObject</code>  上的样式不起作用，同时，我们这里使用的是电脑的默认字体，<code>Kaiti</code>  有的电脑上可能没有安装这种字体@update 2023-05-12<strong>解决safari兼容性问题</strong>通过使用  <code>text-to-path</code> 的方式解决，将文字转为 <code>path</code> 元素：<ul>
+如下：<img src="pase-1.png" loading="lazy">问题是作用在 <code>foreignObject</code>  上的样式不起作用，同时，我们这里使用的是电脑的默认字体，<code>Kaiti</code>  有的电脑上可能没有安装这种字体<strong>解决safari兼容性问题</strong>通过使用  <code>text-to-path</code> 的方式解决，将文字转为 <code>path</code> 元素：<ul>
 <li>移除了 style 内部的 fontface 引用,  将本来嵌入到 svg 内部的 font 提取到页面引入</li>
 <li>移除了 foreignObject  元素，用 path  进行替换</li>
 <li>选用较小的中文字体 方正简体楷体，只有 3.9 MB，方便快速引用下载</li>
