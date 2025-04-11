@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="AB testing, nginx, algorithm,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="上善若水" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="本次分享的目的： 了解 A/B 测试的一些基本概念 一些简单的代码分流实现  为什么需要 A/B 测试  需要一种靠谱的评估方法来判断目标的有效性个人经验判断带来的不一致性和主观性 找到数据变动的真实因素找到那个真正影响数据的因素  什么是 A/B 测试 A/B 测试是一种随机实验过程，通过将一种变量的多个版本同时展示给不同的用户，来确定哪个版本能带来最大程度的业务指标提升。根据以上的描述，来总结">
+<meta name="keywords" content="AB testing, nginx, algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AB测试介绍">
+<meta property="og:url" content="https://newpromise.github.io/2025/04/11/AB测试介绍/index.html">
+<meta property="og:site_name" content="上善若水">
+<meta property="og:description" content="本次分享的目的： 了解 A/B 测试的一些基本概念 一些简单的代码分流实现  为什么需要 A/B 测试  需要一种靠谱的评估方法来判断目标的有效性个人经验判断带来的不一致性和主观性 找到数据变动的真实因素找到那个真正影响数据的因素  什么是 A/B 测试 A/B 测试是一种随机实验过程，通过将一种变量的多个版本同时展示给不同的用户，来确定哪个版本能带来最大程度的业务指标提升。根据以上的描述，来总结">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://newpromise.github.io/2025/04/11/AB测试介绍/3a9fc80bc9cf49688b1edadb967c3869~tplv-em5hxbkur4-noop.image">
+<meta property="og:updated_time" content="2025-04-11T08:53:44.021Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AB测试介绍">
+<meta name="twitter:description" content="本次分享的目的： 了解 A/B 测试的一些基本概念 一些简单的代码分流实现  为什么需要 A/B 测试  需要一种靠谱的评估方法来判断目标的有效性个人经验判断带来的不一致性和主观性 找到数据变动的真实因素找到那个真正影响数据的因素  什么是 A/B 测试 A/B 测试是一种随机实验过程，通过将一种变量的多个版本同时展示给不同的用户，来确定哪个版本能带来最大程度的业务指标提升。根据以上的描述，来总结">
+<meta name="twitter:image" content="https://newpromise.github.io/2025/04/11/AB测试介绍/3a9fc80bc9cf49688b1edadb967c3869~tplv-em5hxbkur4-noop.image">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://newpromise.github.io/2025/04/11/AB测试介绍/">
+
+
+
+
+
+  <title>AB测试介绍 | 上善若水</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">上善若水</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://newpromise.github.io/2025/04/11/AB测试介绍/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="上善若水">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上善若水">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AB测试介绍</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-11T16:53:31+00:00">
+                2025-04-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-04-11T08:53:44+00:00">
+                2025-04-11
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/backend-devops-data-structure/" itemprop="url" rel="index">
+                    <span itemprop="name">backend, devops, data structure</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2025/04/11/AB测试介绍/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2025/04/11/AB测试介绍/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2025/04/11/AB测试介绍/" class="leancloud_visitors" data-flag-title="AB测试介绍">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.1k字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        本次分享的目的：<ul>
+<li>了解 A/B 测试的一些基本概念</li>
+<li>一些简单的代码分流实现</li>
+</ul>
+<h3 id="为什么需要-ab-测试">为什么需要 A/B 测试</h3>
+<ul>
+<li>需要一种靠谱的评估方法来判断目标的有效性个人经验判断带来的不一致性和主观性</li>
+<li>找到数据变动的真实因素找到那个真正影响数据的因素</li>
+</ul>
+<h3 id="什么是-ab-测试">什么是 A/B 测试</h3>
+A/B 测试是一种随机实验过程，通过将<strong>一种</strong>变量的<strong>多个</strong>版本<strong>同时</strong>展示给不同的用户，来确定哪个版本能带来最大程度的业务指标提升。根据以上的描述，来总结 A/B 测试的三个特点：<ul>
+<li><h6 id="一个-ab-测试只有一个变量">一个 A/B 测试只有一个变量</h6>
+</li>
+<li>一个 A/B 测试可以多个版本同时进行，并不局限于两种方案</li>
+<li>A/B 测试的多种方案需要同时进行，具有相同的实验环境</li>
+</ul>
+<h3 id="ab-测试的应用场景">A/B 测试的应用场景</h3>
+<ul>
+<li>精细化运营，数据驱动业务增长</li>
+<li>为功能调整提供低风险，可量化的统计方法</li>
+</ul>
+<h3 id="ab-测试的一些概念">A/B 测试的一些概念</h3>
+<h4 id="命中">命中</h4>
+用户参与到实验之中即为命中，反之则为 “未命中”<h4 id="实验组，对照组">实验组，对照组</h4>
+实验组和对照组是一组相对的概念，A/B 测试通常是为了验证一个新策略的效果，在实验中，抽取的用户随机分配到 A 组 和 B 组中，A 组用户体验到新策略，B 组用户体验到旧策略，那么 A 为实验组， B 为对照组。<h4 id="实验">实验</h4>
+我们将一个 A/B 测试称为一个实验，注意要和实验组不是一个东西，实验组是一个实验内划分的，一个实验里面区分多个实验组和对照组。<h4 id="互斥实验">互斥实验</h4>
+不能共享流量的两种实验<ul>
+<li>一份流量，实验顺序进行</li>
+<li>流量拆分，同时进行多个实验，实验之间的流量互相独立</li>
+</ul>
+<h4 id="实验层技术">实验层技术</h4>
+如果有多个 A/B 测试需要进行，进行时会出现一些问题：<ul>
+<li>如果将流量平均分配到多个实验中，当实验过多或总流量减少时，单个实验分配的流量就会减少，较少的流量会增大数据的误差</li>
+<li>一个个的进行实验会浪费时间，造成实验效率低下</li>
+</ul>
+解决方式：将每一个独立实验分为一个实验层，流量经过每一个实验层之后，再进行一个科学分配<h4 id="正交实验">正交实验</h4>
+采用实验层技术的一种实验方式，提高实验效率的同时保证科学分配：<img src="3a9fc80bc9cf49688b1edadb967c3869~tplv-em5hxbkur4-noop.image" loading="lazy">举例，我们要同时做位置和颜色的实验，使用正交实验过程如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">总流量：100%</span><br><span class="line"></span><br><span class="line">位置实验（实验层1）： 位置上（实验组A1） 位置下 (对照组A2)</span><br><span class="line"></span><br><span class="line">颜色实验（实验层2）： 颜色黑（实验组B1） 颜色白（对照组B2）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">上（50%）下（50%）</span><br><span class="line"></span><br><span class="line">黑（50%）白（50%）</span><br><span class="line"></span><br><span class="line">经过流量正交之后，分为四个版本：</span><br><span class="line"></span><br><span class="line">黑上，黑下，白上，白下（25%）</span><br><span class="line"></span><br><span class="line">统计数据，统计位置变化对于数据的影响，可以分别对比下面两组的数据：</span><br><span class="line">黑上 + 白上   黑下 + 白下</span><br><span class="line"></span><br><span class="line">因为颜色变化在两个组里面的分配比例一致，颜色变化对于实验的影响均匀分配到两个组中，所以不必担心颜色实验的影响</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何设计一个-ab-测试">如何设计一个 A/B 测试</h3>
+<ul>
+<li>分析现有流程找到存在问题的环节</li>
+<li>观察分析用户行为，找到造成问题的原因</li>
+<li>构建假设，尝试新增解决方案</li>
+<li>验证假设，通过 A/B 测试来对多种方案进行评估</li>
+<li>分析数据，采用方案</li>
+</ul>
+<h3 id="需要注意的一些问题">需要注意的一些问题</h3>
+当 A/B 测试被设计出来之后，针对产品提出的具体实验过程，实验中的一些问题需要我们进行合理质疑的：<h4 id="ab-测试只做两种方案，非-a-即-b">A/B 测试只做两种方案，非 A 即 B</h4>
+注意： A/B 测试是多方案同时进行的，不存在非对即错的思想，一个产品的改动会有各种各样的争议，我们需要列举出多种，足够多的假设来进行一一尝试，A/B 测试是一个多方案择优实验的过程，不是判断对错的过程<h4 id="ab-测试没有对照组">A/B 测试没有对照组</h4>
+不能拿新功能的数据来直接对比线上的数据，新旧功能上线的时间周期不同，宣发强度不同，或者可能受其他功能的影响，直接对比的方式得出的结论并不客观。<h4 id="一个ab-测试有多个变量">一个A/B 测试有多个变量</h4>
+多个变量带来的影响无法确定是哪个变量产生的积极或者消极作用，如果需要同时实验多个变量，需要将其分为一个个的实验，使用实验层技术进行正交实验来寻求最优解。<h4 id="无法保证数据的随机性">无法保证数据的随机性</h4>
+流量分配的方法要保证其尽可能的随机，比如，用用户标识的奇偶来进行分配，如果不能保证生成标识的算法是否足够随机，那流量分配可能会有偏好<h4 id></h4>
+<h3 id="ab-测试的代码实现">A/B 测试的代码实现</h3>
+<h4 id="随机算法的设计">随机算法的设计</h4>
+相关文章：<a href="https://towardsdatascience.com/assign-experiment-variants-at-scale-in-a-b-tests-e80fedb2779d" target="_blank" rel="noopener">https://towardsdatascience.com/assign-experiment-variants-at-scale-in-a-b-tests-e80fedb2779d</a>好的随机算法的原则：<ul>
+<li>对于一个实验，用户看到一个实验的不同分组的过程不能有偏向性</li>
+<li>对于同一个用户，重复实验得到的结果应该是确定的</li>
+<li>同时运行多个实验，多个实验之间不能相互影响关联的情况，用户看到下一个实验的概率不能受到上一个实验的影响</li>
+<li>随机算法应该是支持增加用户看到实验组的概率，在不改变原来实验组人员的情况下，调节增加更多的实验组成员<blockquote>
+短期的活动页面，需要支持更加灵活的流量分配</blockquote>
+</li>
+</ul>
+<h4 id="nginx-分流">nginx 分流</h4>
+<h5 id="目前公司方案：">目前公司方案：</h5>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">localtion</span> / &#123;</span><br><span class="line">  <span class="comment"># 匹配 xkw-device-id 符合后面的正则</span></span><br><span class="line">	<span class="comment">#if ($cookie_xkw-device-id ~* "[A-F0-9]&#123;31&#125;([A-B]|[0-3])") &#123;</span></span><br><span class="line">  <span class="comment">#    proxy_pass http://newM2feature;</span></span><br><span class="line">  <span class="comment">#&#125;</span></span><br><span class="line">  <span class="attribute">proxy_pass</span> http://newM2master;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+存在的问题：1、无法保证生成 <code>xkw_device_id</code> 的算法的随机性，2、比例分配不灵活<h5 id="split_clients">split_clients</h5>
+ngx_http_split_clients_module  是默认集成到 nginx 中的，不需要额外的安装成本文档地址：<a href="https://nginx.org/en/docs/http/ngx_http_split_clients_module.html#example" target="_blank" rel="noopener">https://nginx.org/en/docs/http/ngx_http_split_clients_module.html#example</a>Demo<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">  <span class="attribute">map</span> <span class="variable">$http_cookie</span> <span class="variable">$xkw_device_id</span> &#123;</span><br><span class="line">    "~*xkw-device-id=([^;]+)" $1;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">split_clients</span> <span class="variable">$xkw_device_id</span> <span class="variable">$variant</span> &#123;</span><br><span class="line">    50% "a";</span><br><span class="line">    50% "b";</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">8081</span>;</span><br><span class="line">    <span class="attribute">server_name</span> localhost;</span><br><span class="line">    <span class="attribute">root</span> /Users/zhangningning/Desktop/个人文件/文章/A:Btest/nginx;</span><br><span class="line">    <span class="attribute">set</span> <span class="variable">$use_file</span> <span class="string">"A.html"</span>;</span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line"></span><br><span class="line">      <span class="attribute">if</span> (<span class="variable">$variant</span> = <span class="string">"a"</span>) &#123;</span><br><span class="line">        <span class="attribute">set</span> <span class="variable">$use_file</span> <span class="string">"A.html"</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="attribute">if</span> (<span class="variable">$variant</span> = <span class="string">"b"</span>) &#123;</span><br><span class="line">        <span class="attribute">set</span> <span class="variable">$use_file</span> <span class="string">"B.html"</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="attribute">index</span> <span class="variable">$use_file</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+关于ngx_http_split_clients_module 使用 MurmurHash2 算法的说明：<a href="https://stackoverflow.com/questions/11899616/murmurhash-what-is-it/" target="_blank" rel="noopener">https://stackoverflow.com/questions/11899616/murmurhash-what-is-it/</a><h5 id="nginx-lua">nginx lua</h5>
+通过可编程的方式实现流量分配<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"># http &#123;</span><br><span class="line">#     lua_package_path &quot;/path/to/lua-scripts/?.lua;;&quot;;</span><br><span class="line">#     lua_package_cpath &quot;/path/to/lua-scripts/?.so;;&quot;;</span><br><span class="line">#     ...</span><br><span class="line"># &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># function ab_test()</span><br><span class="line">#     local random = math.random(100)</span><br><span class="line">#     if random &lt;= 50 then</span><br><span class="line">#         return &quot;A&quot;</span><br><span class="line">#     else</span><br><span class="line">#         return &quot;B&quot;</span><br><span class="line">#     end</span><br><span class="line"># end</span><br><span class="line"></span><br><span class="line"># local variant = ab_test()</span><br><span class="line"># ngx.var.ab_variant = variant</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># server &#123;</span><br><span class="line">#     ...</span><br><span class="line">#     location / &#123;</span><br><span class="line">#         access_by_lua_file /path/to/lua-scripts/ab_test.lua;</span><br><span class="line">#         if ($ab_variant = &quot;A&quot;) &#123;</span><br><span class="line">#             proxy_pass http://backend_a;</span><br><span class="line">#         &#125;</span><br><span class="line">#         if ($ab_variant = &quot;B&quot;) &#123;</span><br><span class="line">#             proxy_pass http://backend_b;</span><br><span class="line">#         &#125;</span><br><span class="line">#         ...</span><br><span class="line">#     &#125;</span><br><span class="line"># &#125;</span><br></pre></td></tr></table></figure>
+
+<a href="https://github.com/openresty/lua-nginx-module#installation" target="_blank" rel="noopener">https://github.com/openresty/lua-nginx-module#installation</a><h4 id="前端应用">前端应用</h4>
+<ul>
+<li>代码层面逻辑控制<ul>
+<li>灵活，精细，容易调整</li>
+<li>需要接口实现</li>
+<li>维护问题导致的无用代码</li>
+</ul>
+</li>
+<li>分支拆分<ul>
+<li>方便，省心</li>
+<li>粗粒度，不灵活 </li>
+<li>带来的分支维护成本以及合并问题</li>
+</ul>
+</li>
+</ul>
+<h4 id="数据统计">数据统计</h4>
+测试的结果是否采用需要使用数学的统计方法来判定，个人经验得出的结论存在误差，缺少说服力。更多统计可看下面的文档：<a href="https://zhuanlan.zhihu.com/p/346602966" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/346602966</a><h4 id="业界实现">业界实现</h4>
+火山引擎A/B测试方案的实现过程：<a href="https://console.volcengine.com/datatester" target="_blank" rel="noopener">https://console.volcengine.com/datatester</a><h4 id="没有银弹">没有银弹</h4>
+<ul>
+<li>数据的随机波动和时间影响导致结果的不可信。科学的统计方法才能得到正确的结论。</li>
+<li>要采用哪种方案，要综合多种因素，不是数据唯一决定的。A/B 测试的方案还需要结合业务的定位，宣传方向等一起决定。</li>
+</ul>
+<h4 id="参考文档">参考文档</h4>
+<a href="https://developer.volcengine.com/articles/7036766927343075341" target="_blank" rel="noopener">聊聊数据驱动和用A/B测试解决问题</a><a href="https://www.modb.pro/db/632761" target="_blank" rel="noopener">https://www.modb.pro/db/632761</a><h3 id="-1"></h3>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AB-testing-nginx-algorithm/" rel="tag"># AB testing, nginx, algorithm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/04/11/拼音编辑器的技术实现/" rel="next" title="拼音编辑器的技术实现">
+                <i class="fa fa-chevron-left"></i> 拼音编辑器的技术实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="上善若水">
+            
+              <p class="site-author-name" itemprop="name">上善若水</p>
+              <p class="site-description motion-element" itemprop="description">争取活的久一些，活的快乐一些</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">99</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/newPromise" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:newpromisenn@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/zhang-zhu-37-97/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么需要-ab-测试"><span class="nav-number">1.</span> <span class="nav-text">为什么需要 A/B 测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是-ab-测试"><span class="nav-number">2.</span> <span class="nav-text">什么是 A/B 测试</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#一个-ab-测试只有一个变量"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">一个 A/B 测试只有一个变量</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#ab-测试的应用场景"><span class="nav-number">3.</span> <span class="nav-text">A/B 测试的应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ab-测试的一些概念"><span class="nav-number">4.</span> <span class="nav-text">A/B 测试的一些概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#命中"><span class="nav-number">4.1.</span> <span class="nav-text">命中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实验组，对照组"><span class="nav-number">4.2.</span> <span class="nav-text">实验组，对照组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实验"><span class="nav-number">4.3.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#互斥实验"><span class="nav-number">4.4.</span> <span class="nav-text">互斥实验</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实验层技术"><span class="nav-number">4.5.</span> <span class="nav-text">实验层技术</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#正交实验"><span class="nav-number">4.6.</span> <span class="nav-text">正交实验</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何设计一个-ab-测试"><span class="nav-number">5.</span> <span class="nav-text">如何设计一个 A/B 测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#需要注意的一些问题"><span class="nav-number">6.</span> <span class="nav-text">需要注意的一些问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ab-测试只做两种方案，非-a-即-b"><span class="nav-number">6.1.</span> <span class="nav-text">A/B 测试只做两种方案，非 A 即 B</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ab-测试没有对照组"><span class="nav-number">6.2.</span> <span class="nav-text">A/B 测试没有对照组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一个ab-测试有多个变量"><span class="nav-number">6.3.</span> <span class="nav-text">一个A/B 测试有多个变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#无法保证数据的随机性"><span class="nav-number">6.4.</span> <span class="nav-text">无法保证数据的随机性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#"><span class="nav-number">6.5.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ab-测试的代码实现"><span class="nav-number">7.</span> <span class="nav-text">A/B 测试的代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#随机算法的设计"><span class="nav-number">7.1.</span> <span class="nav-text">随机算法的设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nginx-分流"><span class="nav-number">7.2.</span> <span class="nav-text">nginx 分流</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#目前公司方案："><span class="nav-number">7.2.1.</span> <span class="nav-text">目前公司方案：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#split_clients"><span class="nav-number">7.2.2.</span> <span class="nav-text">split_clients</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#nginx-lua"><span class="nav-number">7.2.3.</span> <span class="nav-text">nginx lua</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#前端应用"><span class="nav-number">7.3.</span> <span class="nav-text">前端应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据统计"><span class="nav-number">7.4.</span> <span class="nav-text">数据统计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#业界实现"><span class="nav-number">7.5.</span> <span class="nav-text">业界实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#没有银弹"><span class="nav-number">7.6.</span> <span class="nav-text">没有银弹</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文档"><span class="nav-number">7.7.</span> <span class="nav-text">参考文档</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-1"><span class="nav-number">8.</span> <span class="nav-text"></span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">上善若水</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'tQcr2ncCywuXB53jtS10kRVA-gzGzoHsz',
+        appKey: 'WGjYtwKr2VClCa7g1kgaRH0a',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("tQcr2ncCywuXB53jtS10kRVA-gzGzoHsz", "WGjYtwKr2VClCa7g1kgaRH0a");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
