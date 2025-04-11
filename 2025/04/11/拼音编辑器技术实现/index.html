@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="SVG, DOM, fontmin,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="上善若水" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="拼音编辑器 需求背景 实现一个拼音编辑器，提高教研同事工作效率实现功能： 三种形式的内容编辑，组合格，四线三格，田字格 组合格中的拼音支持切换音调，遵循拼音的注音逻辑 多音字支持切换不同的拼音 支持新增，删除，换行格子 四线三格支持跟随内容的输入而宽度变化，自适应  支持导出为 svg 形式的 base64 支持修改编辑，编辑内容回显  代码结构 Dom 结构   最外层svg: 编辑器内容区的容">
+<meta name="keywords" content="SVG, DOM, fontmin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="拼音编辑器技术实现">
+<meta property="og:url" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/index.html">
+<meta property="og:site_name" content="上善若水">
+<meta property="og:description" content="拼音编辑器 需求背景 实现一个拼音编辑器，提高教研同事工作效率实现功能： 三种形式的内容编辑，组合格，四线三格，田字格 组合格中的拼音支持切换音调，遵循拼音的注音逻辑 多音字支持切换不同的拼音 支持新增，删除，换行格子 四线三格支持跟随内容的输入而宽度变化，自适应  支持导出为 svg 形式的 base64 支持修改编辑，编辑内容回显  代码结构 Dom 结构   最外层svg: 编辑器内容区的容">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/image-20230409141357370.png">
+<meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/image-20230409143554997.png">
+<meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/结构图.svg">
+<meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/拼音声调.svg">
+<meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/输入汉字获取拼音.svg">
+<meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/2.png">
+<meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/3.png">
+<meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/4.png">
+<meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/pase-1.png">
+<meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/Pasted%20image%2020230512113526.png">
+<meta property="og:updated_time" content="2025-04-11T02:42:48.319Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="拼音编辑器技术实现">
+<meta name="twitter:description" content="拼音编辑器 需求背景 实现一个拼音编辑器，提高教研同事工作效率实现功能： 三种形式的内容编辑，组合格，四线三格，田字格 组合格中的拼音支持切换音调，遵循拼音的注音逻辑 多音字支持切换不同的拼音 支持新增，删除，换行格子 四线三格支持跟随内容的输入而宽度变化，自适应  支持导出为 svg 形式的 base64 支持修改编辑，编辑内容回显  代码结构 Dom 结构   最外层svg: 编辑器内容区的容">
+<meta name="twitter:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/image-20230409141357370.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/">
+
+
+
+
+
+  <title>拼音编辑器技术实现 | 上善若水</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">上善若水</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="上善若水">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上善若水">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">拼音编辑器技术实现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-11T10:40:53+00:00">
+                2025-04-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-04-11T02:42:48+00:00">
+                2025-04-11
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/frontend-svg-fonts/" itemprop="url" rel="index">
+                    <span itemprop="name">frontend, svg, fonts</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2025/04/11/拼音编辑器技术实现/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2025/04/11/拼音编辑器技术实现/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2025/04/11/拼音编辑器技术实现/" class="leancloud_visitors" data-flag-title="拼音编辑器技术实现">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.6k字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="拼音编辑器">拼音编辑器</h1>
+<h2 id="需求背景">需求背景</h2>
+实现一个拼音编辑器，提高教研同事工作效率实现功能：<ol>
+<li>三种形式的内容编辑，组合格，四线三格，田字格</li>
+<li>组合格中的拼音支持切换音调，遵循拼音的注音逻辑</li>
+<li>多音字支持切换不同的拼音</li>
+<li>支持新增，删除，换行格子</li>
+<li>四线三格支持跟随内容的输入而宽度变化，自适应</li>
+<li> 支持导出为 svg 形式的 base64</li>
+<li>支持修改编辑，编辑内容回显</li>
+</ol>
+<h2 id="代码结构">代码结构</h2>
+<h3 id="dom-结构">Dom 结构</h3>
+<img src="image-20230409141357370.png" loading="lazy"><ul>
+<li> 最外层<code>svg</code>: 编辑器内容区的容器, 后面的子元素都是相对于这个 svg 进行定位的。</li>
+<li><code>style</code>: 用来放置一些样式，这里是用来放置字体，根据是四线三格还是组合格，分别引入不同的字体文件。</li>
+<li><code>defs</code>:  <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/defs" target="_blank" rel="noopener">defs</a> 用来放置一些公共的后面会用到的 svg 图形，理解为一个公共组件，这里两个组件：<code>sxsg-lines</code> : 定义四线三格的线段， <code>tzg-lines</code>: 用来定义田字格的线段。在后面使用的时候，通过使用 <code>use</code> 的方式引入： <code>&lt;use href=&quot;#tzg-lines&quot;&gt;&lt;/use&gt;</code></li>
+<li><code>svg.lattice</code>: 使用类名为 <code>lattice</code> 的 svg 为编辑器的格子，编辑器的内容区都是由一个个的这样的格子构成的，通过修改这些格子的 x, y 的属性，来调整位置，实现换行和新增格子的功能。</li>
+</ul>
+<h6 id="svglattice"><code>svg.lattice</code></h6>
+主要有两部分构成，背景线条以及内容编辑器区域，如下，红色区域内的元素为绘制背景线条的svg元素，蓝色区域内的元素为编辑内容区域：<img src="image-20230409143554997.png" loading="lazy"><ul>
+<li><code>svg.frame-group</code>: 组合格的内容区域，包含 <code>svg.frame-sxsg</code> 和 <code>svg.frame-tzg</code></li>
+<li><code>svg.frame-sxsg</code>: 四线三格的内容区域</li>
+<li><code>svg.frame-tzg</code>: 田字格的内容区域边框</li>
+<li><code>use</code>: 引用前面 <code>defs</code> 元素中声明好的图形</li>
+<li><code>foreignObject</code>  :  用来在 svg 元素中嵌入 html 内容</li>
+</ul>
+<h3 id="代码结构：">代码结构：</h3>
+<code>Editor</code>: 编辑器，对于格子元素进行删除，添加，换行位置的控制，svg 内容的导出，编辑器初始化，接受修改的数据回显<code>Lattice</code>: 编辑器格子，创建格子元素的结构，添加格子内的可编辑内容<code>EditText</code>: 格子内容部分，处理编辑事件，对于输入的内容进行校验，添加一些dom事件<code>Frame</code>: 用来绘制格子中的格子线，创建两种类型的格子线，四线三格和田字格的线段大体结构图示：按照田字格的类型为例<img src="结构图.svg" loading="lazy">另外存在一个 <code>Events</code> 类，<code>Lattice</code> 和 <code>EditText</code> 都有继承，用来方便进行事件通信<h2 id="功能实现">功能实现</h2>
+一些重要功能实现的流程图：<ul>
+<li>拼音的输入，切换声调的实现<img src="拼音声调.svg" loading="lazy"></li>
+</ul>
+<ul>
+<li>输入汉字获取拼音<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/compositionend_event" target="_blank" rel="noopener">compositionend</a><img src="输入汉字获取拼音.svg" loading="lazy"></li>
+<li>换行，删除，新增格子的实现都是在 <code>EditText</code> 中触发一些事件，向上传递至 <code>Editor</code>, 在 <code>Editor</code> 中进行格子元素的控制</li>
+</ul>
+<h2 id="一些问题">一些问题</h2>
+<h3 id="字体问题">字体问题</h3>
+确定编辑器的字体：汉字：楷体英文：和人教版pep的字体保持一致（舒窈意大利斜体）<blockquote>
+四线三格中的字体为手写体，我们常见的英文字体可以称为印刷体，写在四线三格中的手写体和印刷体有写法上的不同，手写体有比较强的个人风格，可以类比为我们汉字字体中的楷书，行书，兰亭体，衡水体小学英语教材中的四线三格英文字体应该采用何种没有明确的规定，是由出版社来决定的</blockquote>
+拼音：没有要求，但是要考虑到特殊字符（带音调的字母）的适配在拼音字体中存在几个问题需要注意：<ul>
+<li>渲染问题（单层 a 和 双层 a）都可以，但是大多是都是使用单层 a， 没有特殊要求</li>
+<li>选择的字体中需要对于特殊的声调进行处理 因此我们选用的字体文件中，要保证字体的展示</li>
+<li>选择开源免费可商用字体</li>
+<li>中文字体需要减少体积</li>
+</ul>
+对于上面的问题，选用了免费可商用的字体： <code>OPPOSans-M-2</code>, 并且使用 <code>fontmin</code> 进行字体文件提取<a href="https://github.com/ecomfe/fontmin" target="_blank" rel="noopener">fontmin</a><a href="http://ecomfe.github.io/fontmin/#app" target="_blank" rel="noopener">http://ecomfe.github.io/fontmin/#app</a><h3 id="svg-绘制">SVG 绘制</h3>
+使用 <a href="https://svgjs.dev/docs/3.0/" target="_blank" rel="noopener">svgjs</a> 来进行 svg 元素的操作控制绘制。<h3 id="svg-中的定位问题">svg 中的定位问题</h3>
+<code>svg</code> 中的元素是通过属性<code>x</code>, <code>y</code> 相对于 <code>svg</code> 左上角的位置（原点）进行定位的，x: 是相对于原点右边的位置，y 是相对于原点下面的位置：<img src="2.png" loading="lazy">但是我们的元素太多，不能相对于一个 svg 原点进行定位，如果这样，就计算很困难，为了方便定位，我们可以通过创建 <code>svg</code> 元素的方式新建一个坐标系，在这个坐标系下进行定位。所以，为什么元素 <code>.frame-sxsg</code> <code>.frame-tzg</code>, <code>.lines</code> 是 <code>svg</code> 元素，是为了方便内部的元素进行定位<h3 id="svg-中的画线">svg 中的画线</h3>
+<h6 id="给定坐标点，是怎么画一条线的-？">给定坐标点，是怎么画一条线的 ？</h6>
+<img src="3.png" loading="lazy">两个坐标点之间画一条线，从这条线上线进行==均分边距==<h4 id="如何画一个包括边框的-50--50-的矩形-？">**如何画一个包括边框的 50 * 50 的矩形 ？</h4>
+<h4 id="实现-box-sizing-border-box-的效果">实现 box-sizing: &#39;border-box&#39; 的效果**</h4>
+<img src="4.png" loading="lazy"><h3 id="svg-中的样式和字体处理">svg 中的样式和字体处理</h3>
+<ul>
+<li>字体要转换为 <code>base64</code> 的格式，避免使用路径找不到的问题</li>
+<li>svg 中涉及到的 style 样式要写在 svg 作用域下面，用于导出时的使用</li>
+</ul>
+<h3 id="兼容性问题">兼容性问题</h3>
+svg 中混合 <code>foreignObject</code> 在 safari 浏览器上会有展示问题：
+如下：<img src="pase-1.png" loading="lazy">问题是作用在 <code>foreignObject</code>  上的样式不起作用，同时，我们这里使用的是电脑的默认字体，<code>Kaiti</code>  有的电脑上可能没有安装这种字体@update 2023-05-12<strong>解决safari兼容性问题</strong>通过使用  <code>text-to-path</code> 的方式解决，将文字转为 <code>path</code> 元素：<ul>
+<li>移除了 style 内部的 fontface 引用,  将本来嵌入到 svg 内部的 font 提取到页面引入</li>
+<li>移除了 foreignObject  元素，用 path  进行替换</li>
+<li>选用较小的中文字体 方正简体楷体，只有 3.9 MB，方便快速引用下载</li>
+</ul>
+<p><img src="Pasted image 20230512113526.png" loading="lazy"></p><a href="https://github.com/shrhdk/text-to-svg" target="_blank" rel="noopener">text-to-path </a>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SVG-DOM-fontmin/" rel="tag"># SVG, DOM, fontmin</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/04/11/vue-component-lifecycle/" rel="next" title="vue-component-lifecycle">
+                <i class="fa fa-chevron-left"></i> vue-component-lifecycle
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="上善若水">
+            
+              <p class="site-author-name" itemprop="name">上善若水</p>
+              <p class="site-description motion-element" itemprop="description">争取活的久一些，活的快乐一些</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">98</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/newPromise" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:newpromisenn@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/zhang-zhu-37-97/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#拼音编辑器"><span class="nav-number">1.</span> <span class="nav-text">拼音编辑器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#需求背景"><span class="nav-number">1.1.</span> <span class="nav-text">需求背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码结构"><span class="nav-number">1.2.</span> <span class="nav-text">代码结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dom-结构"><span class="nav-number">1.2.1.</span> <span class="nav-text">Dom 结构</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#svglattice"><span class="nav-number">1.2.1.0.0.1.</span> <span class="nav-text">svg.lattice</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码结构："><span class="nav-number">1.2.2.</span> <span class="nav-text">代码结构：</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#功能实现"><span class="nav-number">1.3.</span> <span class="nav-text">功能实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些问题"><span class="nav-number">1.4.</span> <span class="nav-text">一些问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字体问题"><span class="nav-number">1.4.1.</span> <span class="nav-text">字体问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#svg-绘制"><span class="nav-number">1.4.2.</span> <span class="nav-text">SVG 绘制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#svg-中的定位问题"><span class="nav-number">1.4.3.</span> <span class="nav-text">svg 中的定位问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#svg-中的画线"><span class="nav-number">1.4.4.</span> <span class="nav-text">svg 中的画线</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#给定坐标点，是怎么画一条线的-？"><span class="nav-number">1.4.4.0.0.1.</span> <span class="nav-text">给定坐标点，是怎么画一条线的 ？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何画一个包括边框的-50--50-的矩形-？"><span class="nav-number">1.4.4.1.</span> <span class="nav-text">**如何画一个包括边框的 50 * 50 的矩形 ？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现-box-sizing-border-box-的效果"><span class="nav-number">1.4.4.2.</span> <span class="nav-text">实现 box-sizing: &#39;border-box&#39; 的效果**</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#svg-中的样式和字体处理"><span class="nav-number">1.4.5.</span> <span class="nav-text">svg 中的样式和字体处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#兼容性问题"><span class="nav-number">1.4.6.</span> <span class="nav-text">兼容性问题</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">上善若水</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'tQcr2ncCywuXB53jtS10kRVA-gzGzoHsz',
+        appKey: 'WGjYtwKr2VClCa7g1kgaRH0a',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("tQcr2ncCywuXB53jtS10kRVA-gzGzoHsz", "WGjYtwKr2VClCa7g1kgaRH0a");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
