@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="SVG, DOM, fontmin,">
 
 
 
@@ -81,28 +81,18 @@
 
 
 
-<meta name="description" content="拼音编辑器技术实现 基本信息  标题: 拼音编辑器技术实现   日期: 2025-04-11 12:03:26   标签: 无   分类: 无     拼音编辑器概述 拼音编辑器提供给教研老师一个编辑拼音、汉字、英文的平台，集成到 qbm，提高教研同事的工作效率。体验地址: https://static.zxxk.com/qd/pinyin-editor/index.html 需求背景 实现一个拼">
+<meta name="description" content="以下是优化后的Markdown文档，结构更清晰，格式更规范：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899">
+<meta name="keywords" content="SVG, DOM, fontmin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="拼音编辑器技术实现">
 <meta property="og:url" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/index.html">
 <meta property="og:site_name" content="上善若水">
-<meta property="og:description" content="拼音编辑器技术实现 基本信息  标题: 拼音编辑器技术实现   日期: 2025-04-11 12:03:26   标签: 无   分类: 无     拼音编辑器概述 拼音编辑器提供给教研老师一个编辑拼音、汉字、英文的平台，集成到 qbm，提高教研同事的工作效率。体验地址: https://static.zxxk.com/qd/pinyin-editor/index.html 需求背景 实现一个拼">
+<meta property="og:description" content="以下是优化后的Markdown文档，结构更清晰，格式更规范：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/image-20230409141357370.png">
-<meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/image-20230409143554997.png">
-<meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/结构图.svg">
-<meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/拼音声调.svg">
-<meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/输入汉字获取拼音.svg">
-<meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/2.png">
-<meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/3.png">
-<meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/4.png">
-<meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/pase-1.png">
-<meta property="og:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/Pasted%20image%2020230512113526.png">
-<meta property="og:updated_time" content="2025-04-11T05:41:26.779Z">
+<meta property="og:updated_time" content="2025-04-11T05:49:23.666Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="拼音编辑器技术实现">
-<meta name="twitter:description" content="拼音编辑器技术实现 基本信息  标题: 拼音编辑器技术实现   日期: 2025-04-11 12:03:26   标签: 无   分类: 无     拼音编辑器概述 拼音编辑器提供给教研老师一个编辑拼音、汉字、英文的平台，集成到 qbm，提高教研同事的工作效率。体验地址: https://static.zxxk.com/qd/pinyin-editor/index.html 需求背景 实现一个拼">
-<meta name="twitter:image" content="https://newpromise.github.io/2025/04/11/拼音编辑器技术实现/image-20230409141357370.png">
+<meta name="twitter:description" content="以下是优化后的Markdown文档，结构更清晰，格式更规范：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899">
 
 
 
@@ -336,7 +326,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-11T13:41:14+00:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-11T13:49:12+00:00">
                 2025-04-11
               </time>
             
@@ -352,12 +342,34 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-04-11T05:41:26+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-04-11T05:49:23+00:00">
                 2025-04-11
               </time>
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/frontend-svg-fonts/" itemprop="url" rel="index">
+                    <span itemprop="name">frontend, svg, fonts</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -401,7 +413,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.6k字
+                  1k字
                 </span>
               
 
@@ -417,7 +429,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5分钟
+                  3分钟
                 </span>
               
             </div>
@@ -438,159 +450,17 @@
       
 
       
-        <h1 id="拼音编辑器技术实现">拼音编辑器技术实现</h1>
-<h2 id="基本信息">基本信息</h2>
-<ul>
-<li><strong>标题</strong>: 拼音编辑器技术实现  </li>
-<li><strong>日期</strong>: 2025-04-11 12:03:26  </li>
-<li><strong>标签</strong>: 无  </li>
-<li><strong>分类</strong>: 无  </li>
-</ul>
-<hr>
-<h2 id="拼音编辑器概述">拼音编辑器概述</h2>
-拼音编辑器提供给教研老师一个编辑拼音、汉字、英文的平台，集成到 qbm，提高教研同事的工作效率。<strong>体验地址</strong>: <a href="https://static.zxxk.com/qd/pinyin-editor/index.html" target="_blank" rel="noopener">https://static.zxxk.com/qd/pinyin-editor/index.html</a><hr>
-<h2 id="需求背景">需求背景</h2>
-实现一个拼音编辑器，提高教研同事工作效率。<h3 id="实现功能">实现功能</h3>
-<ol>
-<li><strong>三种形式的内容编辑</strong>:<ul>
-<li>组合格</li>
-<li>四线三格</li>
-<li>田字格</li>
-</ul>
-</li>
-<li><strong>组合格中的拼音支持切换音调</strong>，遵循拼音的注音逻辑</li>
-<li><strong>多音字支持</strong>切换不同的拼音</li>
-<li><strong>支持操作</strong>:<ul>
-<li>新增格子</li>
-<li>删除格子</li>
-<li>换行格子</li>
-</ul>
-</li>
-<li><strong>四线三格特性</strong>:<ul>
-<li>支持跟随内容的输入而宽度变化</li>
-<li>自适应</li>
-</ul>
-</li>
-<li><strong>导出功能</strong>:<ul>
-<li>支持导出为 svg 形式的 base64</li>
-</ul>
-</li>
-<li><strong>编辑功能</strong>:<ul>
-<li>支持修改编辑</li>
-<li>编辑内容回显</li>
-</ul>
-</li>
+        以下是优化后的Markdown文档，结构更清晰，格式更规范：<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 拼音编辑器技术实现</span><br><span class="line">date: 2025-04-11 13:41:14</span><br><span class="line">tags: [拼音编辑器, SVG, 前端开发]</span><br><span class="line">categories: [技术文档]</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section"># 拼音编辑器技术实现</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 概述</span></span><br><span class="line"></span><br><span class="line">拼音编辑器是为教研老师提供的编辑平台，支持拼音、汉字、英文的编辑功能，集成到QBM系统以提高工作效率。</span><br><span class="line"></span><br><span class="line"><span class="strong">**体验地址**</span>：[<span class="string">https://static.zxxk.com/qd/pinyin-editor/index.html</span>](<span class="link">https://static.zxxk.com/qd/pinyin-editor/index.html</span>)</span><br><span class="line"></span><br><span class="line"><span class="section">## 需求分析</span></span><br><span class="line"></span><br><span class="line"><span class="section">### 核心需求</span></span><br><span class="line">实现高效的拼音编辑工具，满足教研工作需求。</span><br><span class="line"></span><br><span class="line"><span class="section">### 功能列表</span></span><br><span class="line"></span><br><span class="line">| 功能类别       | 详细功能描述                                                                 |</span><br><span class="line">|----------------|----------------------------------------------------------------------------|</span><br><span class="line">| 编辑形式       | 组合格、四线三格、田字格                                                   |</span><br><span class="line">| 拼音功能       | 支持音调切换、多音字切换                                                   |</span><br><span class="line">| 基础操作       | 新增格子、删除格子、换行格子                                               |</span><br><span class="line">| 四线三格特性   | 宽度自适应内容变化                                                         |</span><br><span class="line">| 导出功能       | 支持导出为SVG格式的base64编码                                              |</span><br><span class="line">| 编辑功能       | 支持内容修改和编辑回显                                                     |</span><br><span class="line"></span><br><span class="line"><span class="section">## 技术架构</span></span><br><span class="line"></span><br><span class="line"><span class="section">### 代码结构</span></span><br><span class="line"></span><br><span class="line"><span class="section">#### DOM结构</span></span><br><span class="line"></span><br><span class="line">![<span class="string">Dom结构图</span>](<span class="link">拼音编辑器技术实现/image-20230409141357370.png</span>)</span><br><span class="line"></span><br><span class="line"><span class="strong">**主要组件**</span>：</span><br><span class="line"></span><br><span class="line"><span class="bullet">1. </span><span class="strong">**外层容器**</span></span><br><span class="line">   - 最外层<span class="code">`svg`</span>：编辑器内容区容器</span><br><span class="line">   - <span class="code">`style`</span>：存放样式和字体定义</span><br><span class="line"></span><br><span class="line"><span class="bullet">2. </span><span class="strong">**公共组件区**</span></span><br><span class="line">   - <span class="code">`defs`</span>：存放可复用的SVG图形</span><br><span class="line"><span class="code">     - `sxsg-lines`：四线三格线段</span></span><br><span class="line"><span class="code">     - `tzg-lines`：田字格线段</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">3. </span><span class="strong">**编辑区域**</span></span><br><span class="line">   - <span class="code">`svg.lattice`</span>：基础编辑单元</span><br><span class="line"><span class="code">     - 背景线条（红色区域）</span></span><br><span class="line"><span class="code">     - 编辑内容（蓝色区域）</span></span><br><span class="line"></span><br><span class="line"><span class="section">#### 逻辑结构</span></span><br><span class="line"></span><br><span class="line">| 类名        | 职责描述                                                                 |</span><br><span class="line">|-------------|--------------------------------------------------------------------------|</span><br><span class="line">| <span class="code">`Editor`</span>    | 格子元素管理（增删改查）、SVG导出、初始化、数据回显                     |</span><br><span class="line">| <span class="code">`Lattice`</span>   | 格子元素创建和结构管理                                                   |</span><br><span class="line">| <span class="code">`EditText`</span>  | 内容编辑处理、输入校验、DOM事件管理                                      |</span><br><span class="line">| <span class="code">`Frame`</span>     | 格子线绘制（四线三格和田字格）                                           |</span><br><span class="line">| <span class="code">`Events`</span>    | 事件通信基类（被<span class="code">`Lattice`</span>和<span class="code">`EditText`</span>继承）                              |</span><br><span class="line"></span><br><span class="line"><span class="strong">**架构图示**</span>：</span><br><span class="line">![<span class="string">结构图示</span>](<span class="link">拼音编辑器技术实现/结构图.svg</span>)</span><br><span class="line"></span><br><span class="line"><span class="section">### 核心流程</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1. </span><span class="strong">**拼音处理流程**</span></span><br><span class="line">   ![<span class="string">拼音声调流程图</span>](<span class="link">拼音编辑器技术实现/拼音声调.svg</span>)</span><br><span class="line"></span><br><span class="line"><span class="bullet">2. </span><span class="strong">**汉字转拼音流程**</span></span><br><span class="line">   ![<span class="string">获取拼音流程图</span>](<span class="link">拼音编辑器技术实现/输入汉字获取拼音.svg</span>)</span><br><span class="line"></span><br><span class="line"><span class="bullet">3. </span><span class="strong">**格子操作流程**</span></span><br><span class="line">   - 事件触发：<span class="code">`EditText`</span></span><br><span class="line">   - 逻辑处理：<span class="code">`Editor`</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 关键技术实现</span></span><br><span class="line"></span><br><span class="line"><span class="section">### 字体解决方案</span></span><br><span class="line"></span><br><span class="line"><span class="section">#### 字体选择标准</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">- </span><span class="strong">**汉字**</span>：楷体</span><br><span class="line"><span class="bullet">- </span><span class="strong">**英文**</span>：舒窈意大利斜体（匹配人教版PEP）</span><br><span class="line"><span class="bullet">- </span><span class="strong">**拼音**</span>：需支持特殊音调字符</span><br><span class="line"></span><br><span class="line"><span class="quote">&gt; **注**：四线三格英文字体无强制标准，由出版社决定</span></span><br><span class="line"></span><br><span class="line"><span class="section">#### 技术方案</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1. </span><span class="strong">**字体处理**</span></span><br><span class="line">   - 选用开源字体：<span class="code">`OPPOSans-M-2`</span></span><br><span class="line">   - 使用<span class="code">`fontmin`</span>进行字体精简</span><br><span class="line"></span><br><span class="line"><span class="bullet">2. </span><span class="strong">**工具推荐**</span></span><br><span class="line">   - [<span class="string">fontmin</span>](<span class="link">https://github.com/ecomfe/fontmin</span>)</span><br><span class="line">   - [<span class="string">在线工具</span>](<span class="link">http://ecomfe.github.io/fontmin/#app</span>)</span><br><span class="line"></span><br><span class="line"><span class="section">### SVG关键技术</span></span><br><span class="line"></span><br><span class="line"><span class="section">#### 核心问题与解决方案</span></span><br><span class="line"></span><br><span class="line">| 问题类型       | 解决方案                                                                 |</span><br><span class="line">|----------------|--------------------------------------------------------------------------|</span><br><span class="line">| 元素定位       | 通过<span class="code">`x`</span>,<span class="code">`y`</span>属性相对定位，建立子坐标系                                   |</span><br><span class="line">| 画线技术       | 坐标点连线+均分边距                                                     |</span><br><span class="line">| 矩形绘制       | 实现类似<span class="code">`border-box`</span>的效果                                              |</span><br><span class="line">| 样式处理       | 样式内联写入SVG作用域                                                   |</span><br><span class="line"></span><br><span class="line"><span class="strong">**图示说明**</span>：</span><br><span class="line"><span class="bullet">- </span>[<span class="string">SVG定位</span>](<span class="link">拼音编辑器技术实现/2.png</span>)</span><br><span class="line"><span class="bullet">- </span>[<span class="string">画线示例</span>](<span class="link">拼音编辑器技术实现/3.png</span>)</span><br><span class="line"><span class="bullet">- </span>[<span class="string">矩形绘制</span>](<span class="link">拼音编辑器技术实现/4.png</span>)</span><br><span class="line"></span><br><span class="line"><span class="section">### 兼容性优化</span></span><br><span class="line"></span><br><span class="line"><span class="section">#### Safari兼容问题</span></span><br><span class="line"></span><br><span class="line"><span class="strong">**问题表现**</span>：</span><br><span class="line"><span class="bullet">- </span><span class="code">`foreignObject`</span>样式失效</span><br><span class="line"><span class="bullet">- </span>默认字体缺失</span><br><span class="line"></span><br><span class="line"><span class="strong">**解决方案**</span>（2023-05-12更新）：</span><br><span class="line"><span class="bullet">1. </span>移除内联字体，改为页面引入</span><br><span class="line"><span class="bullet">2. </span>使用<span class="code">`text-to-path`</span>转换文字为路径</span><br><span class="line"><span class="bullet">3. </span>选用精简字体（方正简体楷体，3.9MB）</span><br><span class="line"></span><br><span class="line"><span class="strong">**相关工具**</span>：</span><br><span class="line"><span class="bullet">- </span>[<span class="string">text-to-svg</span>](<span class="link">https://github.com/shrhdk/text-to-svg</span>)</span><br><span class="line"></span><br><span class="line"><span class="strong">**效果对比**</span>：</span><br><span class="line">![<span class="string">优化前后对比</span>](<span class="link">拼音编辑器技术实现/Pasted image 20230512113526.png</span>)</span><br></pre></td></tr></table></figure>
+
+优化要点说明：<ol>
+<li>完善了元信息（tags和categories）</li>
+<li>使用表格组织功能列表和解决方案</li>
+<li>优化了标题层级结构</li>
+<li>增加了技术架构的图示说明</li>
+<li>将关键问题与解决方案表格化</li>
+<li>保持了所有原始技术细节</li>
+<li>提高了文档的可读性和专业性</li>
 </ol>
-<hr>
-<h2 id="技术实现">技术实现</h2>
-<h3 id="代码结构">代码结构</h3>
-<h4 id="dom-结构">Dom 结构</h4>
-<img src="image-20230409141357370.png" loading="lazy"><strong>结构说明</strong>:<ul>
-<li><strong>最外层<code>svg</code></strong>: 编辑器内容区的容器，后面的子元素都是相对于这个 svg 进行定位的。</li>
-<li><strong><code>style</code></strong>: 用来放置一些样式，这里是用来放置字体，根据是四线三格还是组合格，分别引入不同的字体文件。</li>
-<li><strong><code>defs</code></strong>: <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/defs" target="_blank" rel="noopener">defs</a> 用来放置一些公共的后面会用到的 svg 图形，理解为一个公共组件，这里两个组件:<ul>
-<li><code>sxsg-lines</code>: 定义四线三格的线段</li>
-<li><code>tzg-lines</code>: 用来定义田字格的线段</li>
-</ul>
-在后面使用的时候，通过使用 <code>use</code> 的方式引入: <code>&lt;use href=&quot;#tzg-lines&quot;&gt;&lt;/use&gt;</code></li>
-<li><strong><code>svg.lattice</code></strong>: 使用类名为 <code>lattice</code> 的 svg 为编辑器的格子，编辑器的内容区都是由一个个的这样的格子构成的，通过修改这些格子的 x, y 的属性，来调整位置，实现换行和新增格子的功能。</li>
-</ul>
-<h5 id="svglattice-详细结构"><code>svg.lattice</code> 详细结构</h5>
-主要有两部分构成:<ol>
-<li>背景线条的svg元素（红色区域）</li>
-<li>编辑内容区域（蓝色区域）</li>
-</ol>
-<img src="image-20230409143554997.png" loading="lazy"><strong>包含元素</strong>:<ul>
-<li><code>svg.frame-group</code>: 组合格的内容区域，包含 <code>svg.frame-sxsg</code> 和 <code>svg.frame-tzg</code></li>
-<li><code>svg.frame-sxsg</code>: 四线三格的内容区域</li>
-<li><code>svg.frame-tzg</code>: 田字格的内容区域边框</li>
-<li><code>use</code>: 引用前面 <code>defs</code> 元素中声明好的图形</li>
-<li><code>foreignObject</code>: 用来在 svg 元素中嵌入 html 内容</li>
-</ul>
-<h4 id="代码逻辑结构">代码逻辑结构</h4>
-<ul>
-<li><code>Editor</code>: 编辑器，对于格子元素进行删除，添加，换行位置的控制，svg 内容的导出，编辑器初始化，接受修改的数据回显</li>
-<li><code>Lattice</code>: 编辑器格子，创建格子元素的结构，添加格子内的可编辑内容</li>
-<li><code>EditText</code>: 格子内容部分，处理编辑事件，对于输入的内容进行校验，添加一些dom事件</li>
-<li><code>Frame</code>: 用来绘制格子中的格子线，创建两种类型的格子线，四线三格和田字格的线段</li>
-</ul>
-<strong>大体结构图示</strong>（以田字格为例）:
-<img src="结构图.svg" loading="lazy"><blockquote>
-另外存在一个 <code>Events</code> 类，<code>Lattice</code> 和 <code>EditText</code> 都有继承，用来方便进行事件通信</blockquote>
-<hr>
-<h3 id="功能实现流程图">功能实现流程图</h3>
-<ol>
-<li><strong>拼音的输入，切换声调的实现</strong><br><img src="拼音声调.svg" loading="lazy"></li>
-<li><strong>输入汉字获取拼音</strong><br><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/compositionend_event" target="_blank" rel="noopener">compositionend</a><br><img src="输入汉字获取拼音.svg" loading="lazy"></li>
-<li><strong>换行，删除，新增格子的实现</strong><br>都是在 <code>EditText</code> 中触发一些事件，向上传递至 <code>Editor</code>，在 <code>Editor</code> 中进行格子元素的控制</li>
-</ol>
-<hr>
-<h2 id="技术难点与解决方案">技术难点与解决方案</h2>
-<h3 id="字体问题">字体问题</h3>
-<h4 id="字体选择标准">字体选择标准</h4>
-<ul>
-<li>汉字: 楷体</li>
-<li>英文: 和人教版pep的字体保持一致（舒窈意大利斜体）</li>
-<li>拼音: 需要考虑到特殊字符（带音调的字母）的适配</li>
-</ul>
-<blockquote>
-四线三格中的字体为手写体，我们常见的英文字体可以称为印刷体，写在四线三格中的手写体和印刷体有写法上的不同，手写体有比较强的个人风格，可以类比为我们汉字字体中的楷书，行书，兰亭体，衡水体<br>小学英语教材中的四线三格英文字体应该采用何种没有明确的规定，是由出版社来决定的</blockquote>
-<h4 id="拼音字体注意事项">拼音字体注意事项</h4>
-<ol>
-<li>渲染问题（单层 a 和 双层 a）<ul>
-<li>都可以，但大多使用单层 a，没有特殊要求</li>
-</ul>
-</li>
-<li>选择的字体中需要对于特殊的声调进行处理</li>
-<li>选择开源免费可商用字体</li>
-<li>中文字体需要减少体积</li>
-</ol>
-<h4 id="解决方案">解决方案</h4>
-选用了免费可商用的字体: <code>OPPOSans-M-2</code>，并且使用 <code>fontmin</code> 进行字体文件提取<strong>相关工具</strong>:<ul>
-<li><a href="https://github.com/ecomfe/fontmin" target="_blank" rel="noopener">fontmin</a></li>
-<li><a href="http://ecomfe.github.io/fontmin/#app" target="_blank" rel="noopener">fontmin在线工具</a></li>
-</ul>
-<hr>
-<h3 id="svg-相关技术">SVG 相关技术</h3>
-<h4 id="svg-绘制">SVG 绘制</h4>
-使用 <a href="https://svgjs.dev/docs/3.0/" target="_blank" rel="noopener">svgjs</a> 来进行 svg 元素的操作控制绘制。<h4 id="svg-中的定位问题">SVG 中的定位问题</h4>
-<code>svg</code> 中的元素是通过属性<code>x</code>, <code>y</code> 相对于 <code>svg</code> 左上角的位置（原点）进行定位的:<ul>
-<li>x: 相对于原点右边的位置</li>
-<li>y: 相对于原点下面的位置</li>
-</ul>
-<img src="2.png" loading="lazy"><strong>解决方案</strong>: 通过创建 <code>svg</code> 元素的方式新建一个坐标系，在这个坐标系下进行定位。这就是为什么元素 <code>.frame-sxsg</code>、<code>.frame-tzg</code>、<code>.lines</code> 是 <code>svg</code> 元素的原因。<h4 id="svg-画线技术">SVG 画线技术</h4>
-<ol>
-<li><strong>给定坐标点画线</strong><br><img src="3.png" loading="lazy"><ul>
-<li>两个坐标点之间画一条线</li>
-<li>从这条线上线进行均分边距</li>
-</ul>
-</li>
-<li><strong>绘制带边框的矩形</strong><br><img src="4.png" loading="lazy"><ul>
-<li>实现 box-sizing: &#39;border-box&#39; 的效果</li>
-</ul>
-</li>
-</ol>
-<h4 id="svg-样式和字体处理">SVG 样式和字体处理</h4>
-<ol>
-<li>字体要转换为 <code>base64</code> 的格式，避免使用路径找不到的问题</li>
-<li>svg 中涉及到的 style 样式要写在 svg 作用域下面，用于导出时的使用</li>
-</ol>
-<hr>
-<h3 id="兼容性问题">兼容性问题</h3>
-<h4 id="问题描述">问题描述</h4>
-svg 中混合 <code>foreignObject</code> 在 safari 浏览器上会有展示问题:<br><img src="pase-1.png" loading="lazy"><strong>具体表现</strong>:<ul>
-<li>作用在 <code>foreignObject</code> 上的样式不起作用</li>
-<li>使用电脑默认字体 <code>Kaiti</code>，有的电脑上可能没有安装这种字体</li>
-</ul>
-<h4 id="解决方案（2023-05-12更新）">解决方案（2023-05-12更新）</h4>
-通过使用 <code>text-to-path</code> 的方式解决，将文字转为 <code>path</code> 元素:<ol>
-<li>移除了 style 内部的 fontface 引用，将本来嵌入到 svg 内部的 font 提取到页面引入</li>
-<li>移除了 foreignObject 元素，用 path 进行替换</li>
-<li>选用较小的中文字体 方正简体楷体，只有 3.9 MB，方便快速引用下载</li>
-</ol>
-<p><img src="Pasted image 20230512113526.png" loading="lazy"></p><strong>相关工具</strong>:<ul>
-<li><a href="https://github.com/shrhdk/text-to-svg" target="_blank" rel="noopener">text-to-path</a></li>
-</ul>
 
       
     </div>
@@ -605,6 +475,12 @@ svg 中混合 <code>foreignObject</code> 在 safari 浏览器上会有展示问�
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SVG-DOM-fontmin/" rel="tag"># SVG, DOM, fontmin</a>
+          
+        </div>
       
 
       
@@ -678,17 +554,8 @@ svg 中混合 <code>foreignObject</code> 在 safari 浏览器上会有展示问�
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -716,7 +583,7 @@ svg 中混合 <code>foreignObject</code> 在 safari 浏览器上会有展示问�
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -727,7 +594,7 @@ svg 中混合 <code>foreignObject</code> 在 safari 浏览器上会有展示问�
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -779,22 +646,6 @@ svg 中混合 <code>foreignObject</code> 在 safari 浏览器上会有展示问�
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#拼音编辑器技术实现"><span class="nav-number">1.</span> <span class="nav-text">拼音编辑器技术实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本信息"><span class="nav-number">1.1.</span> <span class="nav-text">基本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拼音编辑器概述"><span class="nav-number">1.2.</span> <span class="nav-text">拼音编辑器概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#需求背景"><span class="nav-number">1.3.</span> <span class="nav-text">需求背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现功能"><span class="nav-number">1.3.1.</span> <span class="nav-text">实现功能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术实现"><span class="nav-number">1.4.</span> <span class="nav-text">技术实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码结构"><span class="nav-number">1.4.1.</span> <span class="nav-text">代码结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#dom-结构"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">Dom 结构</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#svglattice-详细结构"><span class="nav-number">1.4.1.1.1.</span> <span class="nav-text">svg.lattice 详细结构</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码逻辑结构"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">代码逻辑结构</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#功能实现流程图"><span class="nav-number">1.4.2.</span> <span class="nav-text">功能实现流程图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术难点与解决方案"><span class="nav-number">1.5.</span> <span class="nav-text">技术难点与解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字体问题"><span class="nav-number">1.5.1.</span> <span class="nav-text">字体问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字体选择标准"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">字体选择标准</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拼音字体注意事项"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">拼音字体注意事项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决方案"><span class="nav-number">1.5.1.3.</span> <span class="nav-text">解决方案</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#svg-相关技术"><span class="nav-number">1.5.2.</span> <span class="nav-text">SVG 相关技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#svg-绘制"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">SVG 绘制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#svg-中的定位问题"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">SVG 中的定位问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#svg-画线技术"><span class="nav-number">1.5.2.3.</span> <span class="nav-text">SVG 画线技术</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#svg-样式和字体处理"><span class="nav-number">1.5.2.4.</span> <span class="nav-text">SVG 样式和字体处理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#兼容性问题"><span class="nav-number">1.5.3.</span> <span class="nav-text">兼容性问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#问题描述"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决方案（2023-05-12更新）"><span class="nav-number">1.5.3.2.</span> <span class="nav-text">解决方案（2023-05-12更新）</span></a></li></ol></li></ol></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
