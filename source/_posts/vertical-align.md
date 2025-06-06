@@ -1,8 +1,8 @@
 ---
-title: vertical-align && line-height
-date: 2018-03-26 20:35:00
-tags: vertical-align && line-height
-categories: CSS
+title: vertical-align
+date: 2025-06-06 17:18:47
+tags: vertical-align, line-height, CSS
+categories: frontend, CSS, layout
 ---
 
 ### vertical-align
@@ -91,11 +91,11 @@ categories: CSS
 }
 ```
 
-![](https://user-images.githubusercontent.com/25844786/38161994-9af821b2-350b-11e8-898a-6074bbff3262.png)
+![](vertical-align/38161994-9af821b2-350b-11e8-898a-6074bbff3262.png)
 
 如上图所示， `class = "demo2"` 这段文字， `vertical-align` 默认是 `baseline`,其元素框底端是与行框的基线对齐的，`demo1` 相比于 `demo2` 元素而言， 元素下移， 这是 `vertical-align: middle` 之后的结果， 图示如下:
 
-![](https://user-images.githubusercontent.com/25844786/38162080-78c48b88-350d-11e8-8d9c-378a8fc11606.png)
+![](vertical-align/38162080-78c48b88-350d-11e8-8d9c-378a8fc11606.png)
 
 如果我们将父元素的 `font-size` 置为0， 我们将会看到下面的情况：
 
@@ -109,11 +109,11 @@ categories: CSS
 
 
 
-![](https://user-images.githubusercontent.com/25844786/38162298-3cec1974-3511-11e8-8b4f-54709a46b049.png)
+![](vertical-align/38162298-3cec1974-3511-11e8-8b4f-54709a46b049.png)
 
 `vertical-align` 各属性作用位置如下：
 
-![](https://user-images.githubusercontent.com/25844786/38162270-cd4fcf8e-3510-11e8-9926-5cc120923396.png)
+![](vertical-align/38162270-cd4fcf8e-3510-11e8-9926-5cc120923396.png)
 
 
 
@@ -129,7 +129,7 @@ categories: CSS
 **这里 `inline boxes` 的高度是什么呢？ 就是今天我们要说的 `line-height`**.
 行高具体来讲就是两行文字之间基线之间的距离：  
 如下图所示：
-![image](https://user-images.githubusercontent.com/25844786/38088466-835a2b96-338e-11e8-82be-ac0a4a367222.png)
+![image](vertical-align/38088466-835a2b96-338e-11e8-82be-ac0a4a367222.png)
 上面的图中红线就是表示所谓的基线， 关于我们另外一个css 的属性 `vertical-align` 改变的就是基线的高低大小。 
 
 #### 使用 `line-height` 实现的垂直居中实现
@@ -157,7 +157,7 @@ CSS:
 ```
 最终结果如下：
 
-![image](https://user-images.githubusercontent.com/25844786/38089336-b99abea2-3391-11e8-81ee-5ffa5c6b736e.png)
+![image](vertical-align/38089336-b99abea2-3391-11e8-81ee-5ffa5c6b736e.png)
 
 并没有居中！
 
@@ -187,7 +187,7 @@ CSS:
 }
 ```
 
-![](https://user-images.githubusercontent.com/25844786/38165453-22d6400c-3546-11e8-9eb6-460cac7be56b.png)
+![](vertical-align/38165453-22d6400c-3546-11e8-9eb6-460cac7be56b.png)
 
 我们看到，这个时候使用 `vertical-align:middle` 并没有实现真正的垂直居中， 原因是什么呢？
 
