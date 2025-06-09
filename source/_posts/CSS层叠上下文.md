@@ -23,7 +23,7 @@ categories: CSS
 
 层叠顺序定义的是在相同的层叠上下文中  **元素发生层叠的时候** ，特定的显示顺序, 层叠顺序图表引入顺序如下:
 
-![ ]( http://ov3b9jngp.bkt.clouddn.com/%E5%B1%82%E5%8F%A0%E8%A7%84%E5%88%99.png ) 
+![ ]( CSS层叠上下文/层叠规则.png ) 
 
 > 注意: 上面有句话 “当元素发生层叠的时候‘ ，如果元素没有创建层叠上下文，没有发生层叠的现象，下面的层叠顺序是不起作用的，但是，使用 `dispplay: inline-block` 是个例外，我想是因为在 CSS 中 `内容主要，样式次之`的原因吧， `inline-block`  会被认为是内容 ， `block` 会被认为属于布局的样式
 
@@ -54,7 +54,7 @@ categories: CSS
 
 效果如下:
 
-![''](http://ov3b9jngp.bkt.clouddn.com/Snipaste_2017-08-22_23-40-52.png)
+![''](CSS层叠上下文/Snipaste_2017-08-22_23-40-52.png)
 
 如果正常情况下，因为在 DOM 文档中，block1 元素位于 block2 元素下面，因此block 1 应该遮挡住 block2 才是，但是为什么会出现这种情况呢？
 
@@ -128,7 +128,7 @@ categories: CSS
 
 这种情况下，实际上 z-index 没有起作用，因为这里面的两个元素都是普通元素，没有创建层叠上下文的元素因此 这里使用 `z-index` 进行比较没有起作用   **使用 `z-index`只对于层叠上下文的元素起作用**
 
-![](http://ov3b9jngp.bkt.clouddn.com/%E5%B1%82%E5%8F%A0%EF%BC%881%EF%BC%89_2017-08-24_00-08-06.png)
+![](CSS层叠上下文/层叠（1）_2017-08-24_00-08-06.png)
 
 
 
@@ -136,7 +136,7 @@ categories: CSS
 
 使用 `position: relative`  和 `z-index` 创建了层叠上下文， ~~在层次上，层叠上下文的要高于普通元素~~，因为使用 `z-index: 0` 的层叠水平会高于 display:block  元素，因此会出现下面的效果
 
-![](http://ov3b9jngp.bkt.clouddn.com/%E5%B1%82%E5%8F%A0%EF%BC%882%EF%BC%89_2017-08-24_00-10-54.png)
+![](CSS层叠上下文/层叠（2）_2017-08-24_00-10-54.png)
 
 
 
@@ -193,7 +193,7 @@ categories: CSS
 
 如下：
 
-![](http://ov3b9jngp.bkt.clouddn.com/flex-z-index%20%20magic%20%202017-08-24_22-33-25.png)
+![](CSS层叠上下文/flex-z-index%20%20magic%20%202017-08-24_22-33-25.png)
 
 这是因为添加了 `z-index` 元素就变成了层叠上下文了，在层叠顺序表中， z-index 大于 0 的层叠上下文在 层次上要高于 `display: block` 的普通元素，如果 `z-index` 为 -1 的时候，其实情况又不一样了。因为 z-index 为负值的时候是会小于 `display: block` 元素的。
 
@@ -226,13 +226,13 @@ categories: CSS
 
    因为，在没有使用 `opacity` 的时候， 没有创建层叠上下文， 这时候 .text 元素是创建了层叠上下文的，因为 `z-index` 小于零，在层叠规则上小于 `block` 元素，所以会被遮盖掉。当我们对于 `class='con'` 的元素没有设置 `opacity`的时候，效果如下：
 
-   ![](http://ov3b9jngp.bkt.clouddn.com/opacityCENGDIE%202017-08-25_23-16-27.png)
+   ![](CSS层叠上下文/opacityCENGDIE%202017-08-25_23-16-27.png)
 
    这样效果的原因是因为：使用了 `position: relative` 和 `z-index: -1` 形成的层叠上下文，在层叠规则上要低于 其他的`block` 元素，因此图片中的红色方块就被遮挡住了；
 
    然而，当我们对元素应用 `opacity` 当 `opacity` 是不为 1 的数字的时候，我们发现层叠顺序发生了改变：  
 
-   ![](http://ov3b9jngp.bkt.clouddn.com/opacity%20Mag%202017-08-25_23-27-13.png)
+   ![](CSS层叠上下文/opacity%20Mag%202017-08-25_23-27-13.png)
 
    Magic!
 
@@ -297,7 +297,7 @@ categories: CSS
 
     效果如下:
 
-   ![](http://ov3b9jngp.bkt.clouddn.com/Snipaste_2017-08-26_00-24-17.png)
+   ![](CSS层叠上下文/Snipaste_2017-08-26_00-24-17.png)
 
    #### 层叠上下文的特性：
 

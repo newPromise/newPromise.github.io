@@ -253,7 +253,7 @@ request.onreadystatechange = function () {
 
 如果服务器认为请求可以接受，可以在 `Access-Control-Allow-Origin` 中回发相同的源信息,如果在服务器端设置 为 * 表示公共资源
 
-![](http://ov3b9jngp.bkt.clouddn.com/%E8%B7%A8%E6%BA%90%E8%B5%84%E6%BA%90%E5%85%B1%E4%BA%ABSnipaste_2017-09-09_10-35-03.png)
+![](JSONP跨域-ajax请求/跨源资源共享Snipaste_2017-09-09_10-35-03.png)
 
 如上图所示，实现了公共资源的共享
 

@@ -43,7 +43,7 @@ categories: Vue
 
 使用 `vuex` 实现多个组件之间状态的共享
 
-![](http://ov3b9jngp.bkt.clouddn.com/vuex.png)
+![](Vue-组件之间的传值/vuex.png)
 
 上图是使用 vuex 的工作流程，下面是我对于 `vuex` 的一些个人理解
 

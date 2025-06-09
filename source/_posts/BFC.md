@@ -89,7 +89,7 @@ css 代码如下 :
 
 
 
-![](http://ov3b9jngp.bkt.clouddn.com/margin%20collapse.png)
+![](BFC/margin%20collapse.png)
 
 如上图所示, 父元素`container` 内部的子元素和父元素的边界坍塌，导致子元素与父元素的边界贴合，并且在子元素之间。两个 `div` `margin`  都设为 10, 最后出现折叠之后的 `margin` 也变成了 10 ，出现了元素折叠的现象
 
@@ -105,7 +105,7 @@ css 代码如下 :
 
 可以看到:
 
-![](http://ov3b9jngp.bkt.clouddn.com/%E7%88%B6%E5%85%83%E7%B4%A0%20bfc.png)
+![](BFC/父元素%20bfc.png)
 
 这时候因为父元素创建了 bfc ，因此子元素的 margin 不会出现坍塌现象，因为创建了 bf c 的元素不会和任何其它的元素出现边距折叠现象
 
@@ -132,7 +132,7 @@ css 代码如下 :
 
 最终结果如下:
 
- ![](http://ov3b9jngp.bkt.clouddn.com/%E5%AD%90%E5%85%83%E7%B4%A0%20bfc.png)  
+ ![](BFC/子元素%20bfc.png)  
 
 最终我们可以看到，因为对于 `b3` 创建了 bfc ， 因此， 对于 bfc 内部的元素的布局是不会影响到外部的子元素的  
 
@@ -166,7 +166,7 @@ css 代码如下 :
 
 结果如下所示:
 
-![](http://ov3b9jngp.bkt.clouddn.com/bfc%20%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8.png)  
+![](BFC/bfc%20清除浮动.png)  
 
 如上图所示，使用了 bfc 清除了由于使用 `float:left` 造成的浮动现象  浮动元素的父元素高度依然存在
 
@@ -203,7 +203,7 @@ css 代码如下 :
 
 图片如下:
 
-![](http://ov3b9jngp.bkt.clouddn.com/noBFC%20%E8%87%AA%E9%80%82%E5%BA%94.png)
+![](BFC/noBFC%20自适应.png)
 
 即使 `aside` 浮动，`main` 还是会贴在左边缘，如果我们想要实现两栏的自适应布局，如何实现？
 
@@ -220,4 +220,4 @@ css 代码如下 :
 
 最终，我们得到了自适应布局: 从而得到了一个两栏布局
 
-![](http://ov3b9jngp.bkt.clouddn.com/BFC%20%E8%87%AA%E9%80%82%E5%BA%94.png)
+![](BFC/BFC%20自适应.png)

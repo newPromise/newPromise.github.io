@@ -38,7 +38,7 @@ categories: CSS
 
 常见的 `transform 特性如下`
 
-![](http://ov3b9jngp.bkt.clouddn.com/tranform%20%E7%89%B9%E6%80%A7.png)
+![](translate3d/tranform%20特性.png)
 
 其中 translate 规定的是元素在 x, y ,z 轴上的位移
 
@@ -66,10 +66,10 @@ transform: translate3d(-50%, -50%, 0); // translate(-50%, -50%)
 
 因为这里是定位, `top` 以及 `left` 被放置的时候的宽度以及高度的百分比是按照父元素的宽度和高度进行计算的
 
-![](http://ov3b9jngp.bkt.clouddn.com/notransform.png)
+![](translate3d/notransform.png)
 
 添加了`transform` 之后
 
-![](http://ov3b9jngp.bkt.clouddn.com/tranform%20%E5%B1%85%E4%B8%AD.png)
+![](translate3d/tranform%20居中.png)
 
 因为这里使用 translate 定义的距离 x , y , z 的距离是根据元素本身的宽度和高度被定义的, 而同时使用 `left: 50%` 的时候元素被紧靠在父元素的中间垂线上, 使用 `translate` 的时候向左移动了元素的一半距离, 使得这个元素在水平距离上是居中设置的。

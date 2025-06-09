@@ -50,7 +50,7 @@ categories: frontend, CSS, layout
 
 结果如下：
 
-![](http://ov3b9jngp.bkt.clouddn.com/vertical-align.png)
+![](vertical-align/vertical-align.png)
 
 如上图所示， 使用 `line-height = height` 并不能实现对于图片的垂直居中效果，为了实现图片的垂直居中， 在 `img` 元素上添加 `vertical-align:middle` 效果， 最终效果如下：
 
@@ -60,7 +60,7 @@ categories: frontend, CSS, layout
 }
 ```
 
-​                                                ![](http://ov3b9jngp.bkt.clouddn.com/vertical-align2.png)  
+​                                                ![](vertical-align/vertical-align2.png)  
 
 注意： 这里的 `vertical-align` 主要参照的是父元素的行高， 因此在设置 `vertical-align: middle` 的时候，需要将父元素的 `line-height` 设置为 父元素的 `height` 高度。
 
@@ -207,7 +207,7 @@ CSS:
 
 居中成功！
 
-![mark](http://ov3b9jngp.bkt.clouddn.com/vertical-alignFontSize.png)
+![mark](vertical-align/vertical-alignFontSize.png)
 
 `font-size: 0px` 起的作用是：
 

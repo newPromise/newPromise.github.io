@@ -30,7 +30,7 @@ arr = [...new Set([arr])]//  [1,2,3,4]
 
  如下图所示
 
-![](http://ov3b9jngp.bkt.clouddn.com/Set.png)
+![](es6-Map-and-Set/Set.png)
 
 `let set = new Set([1,2,3,4])`
 
@@ -126,11 +126,11 @@ let map = new Map();
 
 通过 console　控制台打印数据如下
 
-![](http://ov3b9jngp.bkt.clouddn.com/map.png)
+![](es6-Map-and-Set/map.png)
 
 类似于　`Set` 结构, 存在 `set` `get` `delete` `has` `clear` 等几种操作方法
 
-![](http://ov3b9jngp.bkt.clouddn.com/map%20%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE.png)
+![](es6-Map-and-Set/map%20操作数据.png)
 
 `set(键， 值)` 写入数据
 
